@@ -18,7 +18,7 @@ public class Game implements Runnable {
 
         // Top-level frame in which game components live
         // Be sure to change "TOP LEVEL FRAME" to the name of your game
-        final JFrame frame = new JFrame("TOP LEVEL FRAME");
+        final JFrame frame = new JFrame("Flappy Bird, but Worse!");
         frame.setLocation(300, 300);
 
         // Status panel
@@ -39,13 +39,29 @@ public class Game implements Runnable {
         // Note here that when we add an action listener to the reset button, we define it as an
         // anonymous inner class that is an instance of ActionListener with its actionPerformed()
         // method overridden. When the button is pressed, actionPerformed() will be called.
-        final JButton reset = new JButton("Reset");
+        final JButton reset = new JButton("Play");
         reset.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 court.reset();
             }
         });
         control_panel.add(reset);
+        
+        final JButton scores = new JButton("High Scores"); 
+        scores.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		court.scores(); 
+        	}
+        });
+        control_panel.add(scores); 
+        
+        final JButton instructions = new JButton("How to Play"); 
+        scores.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		court.instructions(); 
+        	}
+        });
+        control_panel.add(instructions); 
 
         // Put the frame on the screen
         frame.pack();

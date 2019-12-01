@@ -7,9 +7,9 @@ public class PipePair{
 	public boolean scored;  
 	
 	public PipePair(int courtWidth, int courtHeight, int xPos) {
-		int upperHeight = (int) (Math.random() * 425); 
-		int lowerHeight = 425 - upperHeight; 
+		int upperHeight = (int) (Math.random() * 175) + 100; 
 		
+		int lowerHeight = 375 - upperHeight; 
 		
 		lower = new LowerPipe(courtWidth, courtHeight, lowerHeight, xPos); 
 		upper = new UpperPipe(courtWidth, courtHeight, upperHeight, xPos); 
@@ -33,7 +33,7 @@ public class PipePair{
 	
 	public boolean scored() {
 		if (lower.getPx() < 100 && !scored) {
-			scored = true; 
+			this.scored = true; 
 			return true; 
 		} else {
 			return false; 

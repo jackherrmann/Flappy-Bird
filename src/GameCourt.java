@@ -6,7 +6,8 @@
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.List; 
+import java.util.List;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.io.*;
 
@@ -25,8 +26,11 @@ public class GameCourt extends JPanel {
 
     // the state of the game logic
     private Bird bird; // the bird, falls and can jump
+    private Ground ground1; // the ground, sits
+    private Ground ground2; // another ground, also sits
     private LinkedList<PipePair> pipe; // the pipes, move across screen
     private int score; // the players score, incremented when pipes pass
+    private int numTicks; // number of ticks since last pipe added
 
     public boolean playing = false; // whether the game is running 
     private JLabel status; // Current status text, i.e. "Running..."
@@ -82,9 +86,12 @@ public class GameCourt extends JPanel {
      */
     public void reset() {
         bird = new Bird(COURT_WIDTH, COURT_HEIGHT);
+        ground1 = new Ground(0); 
+        ground2 = new Ground(465); 
         pipe = new LinkedList<PipePair>(); 
         pipe.add(new PipePair(COURT_WIDTH, COURT_HEIGHT, 465)); 
         score = 0; 
+        numTicks = 0; 
 
         playing = true;
 
@@ -134,47 +141,65 @@ public class GameCourt extends JPanel {
      */
     void tick() throws IOException {
         if (playing) {
+
+
+        	
+        	if (pipe.peek().gone()) {
+            	pipe.removeFirst(); 
+            	pipe.add(new PipePair(COURT_WIDTH, COURT_HEIGHT, 465)); 
+            }
         	
         	//Game state updating
             status.setText("Score: " + score); 
             // check for the game end conditions
-            if (pipe.peek().intersects(bird) || bird.getPy() > 600 || bird.getPy() < 0) {
+            if (pipe.peek().intersects(bird) || bird.getPy() > 525 || bird.getPy() < 0) {
                 playing = false;
                 status.setText("You lose! Score: " + score);
                 if (setHighScore(score)) {
                 	status.setText("You Lose: New High Score: " + score);
                 }
+                return; 
             } 
+            
+            // reset ground, if necessary
+            if (ground1.getPx() <= -1 * COURT_WIDTH + 5) {
+            	ground1.reset(); 
+            }
+            if (ground2.getPx() <= -1 * COURT_WIDTH + 5) {
+            	ground2.reset(); 
+            }
 
         	
             // move the bird and pipes
             bird.move();
-            for (PipePair p : pipe) {
-            	p.move(); 
+            ground1.move(); 
+            ground2.move(); 
+            Iterator<PipePair> pipeIterator = pipe.iterator(); 
+            while (pipeIterator.hasNext()) {
+            	pipeIterator.next().move();
             }
             
-            // update head pipe info
+            
+            // update score
             if (pipe.peek().scored()) {
             	score++;  
-            }
-            
-            
-            if (pipe.peek().gone()) {
-            	pipe.poll(); 
-            	pipe.add(new PipePair(COURT_WIDTH, COURT_HEIGHT, 465));
             }
 
             // update the display
             repaint();
         }
     }
+    
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        ground1.draw(g);
+        ground2.draw(g);
         bird.draw(g);
-        for (PipePair p : pipe) {
-        	p.draw(g);
+        Iterator<PipePair> pipeIterator = pipe.iterator(); 
+        while (pipeIterator.hasNext()) {
+        	pipeIterator.next().draw(g);
         }
     }
 

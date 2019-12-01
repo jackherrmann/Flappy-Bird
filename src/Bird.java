@@ -25,6 +25,7 @@ public class Bird extends GameObj {
     
     public static final int ACC_Y = 2; 
     public static final int ACC_X = 0; 
+
     
     private static BufferedImage img;
 

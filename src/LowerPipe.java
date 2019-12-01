@@ -19,7 +19,8 @@ import javax.imageio.ImageIO;
  * the draw method is invoked.
  */
 public class LowerPipe extends GameObj {
-    public static final String IMG_FILE = "files/lowerpipe.png";
+    public static final String IMG_FILE_LID = "files/PipeLid.png";
+    public static final String IMG_FILE_SHAFT = "files/PipeShaft.png";
     public static final int WIDTH = 100;
     public static final int INIT_VEL_X = -8;
     public static final int INIT_VEL_Y = 0;
@@ -28,15 +29,25 @@ public class LowerPipe extends GameObj {
     public static final int ACC_X = 0; 
     public static final int ACC_Y = 0; 
 
-    private static BufferedImage img;
+    private static BufferedImage imgLid;
+    private static BufferedImage imgShaft;
+
 
     public LowerPipe(int courtWidth, int courtHeight, int height, int xPos) {
     	
-        super(INIT_VEL_X, INIT_VEL_Y, xPos, 625-height, WIDTH, height, ACC_X, ACC_Y);
+        super(INIT_VEL_X, INIT_VEL_Y, xPos, 575-height, WIDTH, height, ACC_X, ACC_Y);
 
         try {
-            if (img == null) {
-                img = ImageIO.read(new File(IMG_FILE));
+            if (imgLid == null) {
+                imgLid = ImageIO.read(new File(IMG_FILE_LID));
+            }
+        } catch (IOException e) {
+            System.out.println("Internal Error:" + e.getMessage());
+        }
+        
+        try {
+            if (imgShaft == null) {
+                imgShaft = ImageIO.read(new File(IMG_FILE_SHAFT));
             }
         } catch (IOException e) {
             System.out.println("Internal Error:" + e.getMessage());
@@ -46,6 +57,9 @@ public class LowerPipe extends GameObj {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(img, this.getPx(), this.getPy(), this.getWidth(), this.getHeight(), null);
+        g.drawImage(imgLid, this.getPx(), this.getPy(), this.getWidth(), 40, null);
+        g.drawImage(imgShaft, this.getPx()+5, this.getPy()+40, this.getWidth()-10, 
+        		this.getHeight() - 40, null);
+        
     }
 }
