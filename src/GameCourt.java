@@ -26,8 +26,7 @@ public class GameCourt extends JPanel {
 
     // the state of the game logic
     private Bird bird; // the bird, falls and can jump
-    private Ground ground1; // the ground, sits
-    private Ground ground2; // another ground, also sits
+    private LinkedList<Ground> grounds; 
     private LinkedList<PipePair> pipe; // the pipes, move across screen
     private int score; // the players score, incremented when pipes pass
     private int numTicks; // number of ticks since last pipe added
@@ -86,8 +85,10 @@ public class GameCourt extends JPanel {
      */
     public void reset() {
         bird = new Bird(COURT_WIDTH, COURT_HEIGHT);
-        ground1 = new Ground(0); 
-        ground2 = new Ground(465); 
+        grounds = new LinkedList<Ground>(); 
+        grounds.add(new Ground(0)); 
+        grounds.add(new Ground(465)); 
+
         pipe = new LinkedList<PipePair>(); 
         pipe.add(new PipePair(COURT_WIDTH, COURT_HEIGHT, 465)); 
         score = 0; 
@@ -162,18 +163,22 @@ public class GameCourt extends JPanel {
             } 
             
             // reset ground, if necessary
-            if (ground1.getPx() <= -1 * COURT_WIDTH + 5) {
-            	ground1.reset(); 
+            if (grounds.peek().getPx() <= -1 * COURT_WIDTH + 5) {
+            	grounds.pop(); 
+            	grounds.add(new Ground(465)); 
             }
-            if (ground2.getPx() <= -1 * COURT_WIDTH + 5) {
-            	ground2.reset(); 
-            }
+            
 
         	
             // move the bird and pipes
             bird.move();
-            ground1.move(); 
-            ground2.move(); 
+            
+            Iterator<Ground> groundIterator = grounds.iterator(); 
+            while (groundIterator.hasNext()) {
+            	groundIterator.next().move();
+            }
+            
+            
             Iterator<PipePair> pipeIterator = pipe.iterator(); 
             while (pipeIterator.hasNext()) {
             	pipeIterator.next().move();
@@ -194,8 +199,10 @@ public class GameCourt extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ground1.draw(g);
-        ground2.draw(g);
+        Iterator<Ground> groundIterator = grounds.iterator(); 
+        while (groundIterator.hasNext()) {
+        	groundIterator.next().draw(g);
+        }
         bird.draw(g);
         Iterator<PipePair> pipeIterator = pipe.iterator(); 
         while (pipeIterator.hasNext()) {
