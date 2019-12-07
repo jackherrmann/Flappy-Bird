@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * A game object displayed using an image.
+ * A pipe object displayed using an image.
  * 
  * Note that the image is read from the file when the object is constructed, and that all objects
  * created by this constructor share the same image data (i.e. img is static). This is important for
@@ -31,11 +31,16 @@ public class LowerPipe extends GameObj {
 
     private static BufferedImage imgLid;
     private static BufferedImage imgShaft;
+    
+    private boolean scored; 
 
 
     public LowerPipe(int courtWidth, int courtHeight, int height, int xPos) {
     	
         super(INIT_VEL_X, INIT_VEL_Y, xPos, 575-height, WIDTH, height, ACC_X, ACC_Y);
+        
+        scored = false; 
+       
 
         try {
             if (imgLid == null) {
@@ -52,6 +57,14 @@ public class LowerPipe extends GameObj {
         } catch (IOException e) {
             System.out.println("Internal Error:" + e.getMessage());
         }
+    }
+    
+    public boolean getScored() {
+    	return scored; 
+    }
+    
+    public void scored() {
+    	scored = true; 
     }
 
 

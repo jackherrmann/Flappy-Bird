@@ -142,4 +142,8 @@ public abstract class GameObj {
      * canvas, a frame, etc.)
      */
     public abstract void draw(Graphics g);
+
+	protected abstract void scored();
+
+	protected abstract boolean getScored();
 }

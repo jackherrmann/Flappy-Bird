@@ -18,13 +18,13 @@ public class Game implements Runnable {
 
         // Top-level frame in which game components live
         // Be sure to change "TOP LEVEL FRAME" to the name of your game
-        final JFrame frame = new JFrame("Flappy Bird, but Worse!");
+        final JFrame frame = new JFrame("Florpy Blord");
         frame.setLocation(300, 300);
 
         // Status panel
         final JPanel status_panel = new JPanel();
         frame.add(status_panel, BorderLayout.SOUTH);
-        final JLabel status = new JLabel("Running...");
+        final JLabel status = new JLabel("Playing");
         status_panel.add(status);
 
         // Main playing area
@@ -47,6 +47,16 @@ public class Game implements Runnable {
         });
         control_panel.add(reset);
         
+        // about button ************************************************
+        final JButton instructions = new JButton("About"); 
+        instructions.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		court.instructions(); 
+        	}
+        });
+        control_panel.add(instructions); 
+        
+        // scores button ************************************************
         final JButton scores = new JButton("High Scores"); 
         scores.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -55,13 +65,14 @@ public class Game implements Runnable {
         });
         control_panel.add(scores); 
         
-        final JButton instructions = new JButton("How to Play"); 
-        scores.addActionListener(new ActionListener() {
+        // AI button ************************************************
+        final JButton auto = new JButton("AI"); 
+        auto.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		court.instructions(); 
+        		court.setAuto(); 
         	}
         });
-        control_panel.add(instructions); 
+        control_panel.add(auto); 
 
         // Put the frame on the screen
         frame.pack();

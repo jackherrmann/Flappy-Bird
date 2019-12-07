@@ -12,17 +12,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * A basic game object starting in the upper left corner of the game court. It is displayed as a
- * square of a specified color.
+ * The bird, sits at one x position, moves up and down based on user/AI flapping and gravity
  */
 public class Bird extends GameObj {
 	public static final String IMG_FILE = "files/bird.png";
     public static final int SIZE = 50;
     public static final int INIT_POS_X = 100;
-    public static final int INIT_POS_Y = 200;
     public static final int INIT_VEL_X = 0;
     public static final int INIT_VEL_Y = 0;
-    
     public static final int ACC_Y = 2; 
     public static final int ACC_X = 0; 
 
@@ -31,11 +28,10 @@ public class Bird extends GameObj {
 
 
     /**
-    * Note that, because we don't need to do anything special when constructing a Square, we simply
-    * use the superclass constructor called with the correct parameters.
+    * Constructor, simply inputs standard bird size and fetches the image file
     */
-    public Bird(int courtWidth, int courtHeight) {
-        super(INIT_VEL_X, INIT_VEL_Y, INIT_POS_X, INIT_POS_Y, SIZE, SIZE, ACC_X, ACC_Y);
+    public Bird(int courtWidth, int courtHeight, int yPos, int yVel) {
+        super(INIT_VEL_X, yVel, INIT_POS_X, yPos, 35, 30, ACC_X, ACC_Y);
         
         try {
             if (img == null) {
@@ -47,9 +43,28 @@ public class Bird extends GameObj {
 
 
     }
-
+    
+    
+    /**
+     * Draws the picture of the bird at it's current location
+     */
     @Override
     public void draw(Graphics g) {
-    	g.drawImage(img, this.getPx(), this.getPy(), this.getWidth(), this.getHeight(), null);
+    	g.drawImage(img, this.getPx(), this.getPy(), SIZE, SIZE, null);
     }
+    
+    
+    
+    /**
+     * These methods do not apply to the bird, and are never called on it
+     */
+	@Override
+	protected boolean getScored() {
+		throw new IllegalArgumentException(); 
+	}
+
+	@Override
+	protected void scored() {
+		throw new IllegalArgumentException(); 
+	}
 }

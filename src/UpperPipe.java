@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * A game object displayed using an image.
+ * A pipe object displayed using an image.
  * 
  * Note that the image is read from the file when the object is constructed, and that all objects
  * created by this constructor share the same image data (i.e. img is static). This is important for
@@ -32,9 +32,13 @@ public class UpperPipe extends GameObj {
 
     private static BufferedImage imgLid;
     private static BufferedImage imgShaft; 
+    
+    private boolean scored; 
 
     public UpperPipe(int courtWidth, int courtHeight, int height, int xPos) {
         super(INIT_VEL_X, INIT_VEL_Y, xPos, INIT_POS_Y, WIDTH, height, ACC_X, ACC_Y);
+        
+        scored = false; 
 
         try {
             if (imgLid == null) {
@@ -52,12 +56,20 @@ public class UpperPipe extends GameObj {
             System.out.println("Internal Error:" + e.getMessage());
         }
     }
+    
+    public boolean getScored() {
+    	return scored; 
+    }
+    
+    public void scored() {
+    	scored = true; 
+    }
 
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(imgShaft, this.getPx(), this.getPy(), this.getWidth()-10, this.getHeight()-40, null);
-        g.drawImage(imgLid, this.getPx()-5, this.getPy() + this.getHeight()-40, this.getWidth(), 
+        g.drawImage(imgShaft, this.getPx()+5, this.getPy(), this.getWidth()-10, this.getHeight()-40, null);
+        g.drawImage(imgLid, this.getPx(), this.getPy() + this.getHeight()-40, this.getWidth(), 
         		40, null);
     }
 }
