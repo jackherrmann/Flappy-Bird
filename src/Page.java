@@ -33,7 +33,7 @@ public class Page {
     	
     	// body1
     	String intro1 = "Hello, and welcome to my game, Florpy Blord."; 
-    	String intro2 = "It’s kindof like the game “Flappy Bird,” from";
+    	String intro2 = "Its kindof like the game Flappy Bird, from";
     	String intro3 = "2013, except worse. I created it using Java Swing,";
     	String intro4 = "Pixel Art Maker, and everything I learned in CIS"; 
     	String intro5 = "120 from my fantastic professors and TAs, who are";
@@ -47,21 +47,21 @@ public class Page {
     	g.drawString(intro6, 70, 250);
     	
     	// body2
-    	String intro7 = "If you’re unfamiliar with Flappy Bird, the"; 
+    	String intro7 = "If you\'re unfamiliar with Flappy Bird, the"; 
     	String intro8 = "instructions are very easy: just press SPACE to"; 
-    	String intro9 = "flap. Don’t touch the pipes, ceiling, or ground though!"; 
+    	String intro9 = "flap. Don\'t touch the pipes, ceiling, or ground though!"; 
     	g.drawString(intro7, 70, 280);
     	g.drawString(intro8, 70, 295);
     	g.drawString(intro9, 70, 310);
     	
     	// body AI
-    	String intro10 = "If you don't feel like playing, you can let"; 
+    	String intro10 = "If you don\'t feel like playing, you can let"; 
     	String intro11 = "an AI play for you by pressing the \"AI\" button"; 
     	g.drawString(intro10, 70, 340);
     	g.drawString(intro11, 70, 355);
     	
     	// body3
-    	String intro12 = "Good luck, and if you’re good enough, you might ";
+    	String intro12 = "Good luck, and if you\'re good enough, you might ";
     	String intro13 = "see your score on the \"High Scores\" page!";
     	String outro = "- Jack Herrmann"; 
     	g.drawString(intro12, 70, 385);
